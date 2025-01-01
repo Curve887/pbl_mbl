@@ -3,6 +3,8 @@ import 'package:get/get.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
 class SplashScreen extends StatelessWidget {
+  const SplashScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     // Delay navigasi ke halaman login

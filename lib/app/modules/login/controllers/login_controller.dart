@@ -1,17 +1,27 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:mie_bagoyang/app/routes/app_pages.dart';
 import 'dart:convert';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends GetxController {
-  // Menyimpan nilai count
-  final count = 0.obs;
-
   // Variabel untuk menandakan status loading
   var isLoading = false.obs;
 
+  // Gunakan TextEditingController
+  final emailController = TextEditingController();
+  final passwordController = TextEditingController();
+
   // Fungsi untuk login
-  Future<void> login(String email, String password) async {
-    final url = 'http://10.127.249.128/api/project/login.php'; // Ganti dengan URL API Anda
+  Future<void> login() async {
+    // Validasi input email dan password
+    if (emailController.text.isEmpty || passwordController.text.isEmpty) {
+      Get.snackbar('Error', 'Email dan password tidak boleh kosong');
+      return;
+    }
+
+    final url = 'http://192.168.214.70/api/project/login.php';
 
     try {
       // Set status loading menjadi true
@@ -22,19 +32,26 @@ class LoginController extends GetxController {
         Uri.parse(url),
         headers: {'Content-Type': 'application/json'},
         body: json.encode({
-          'email': email,
-          'password': password,
+          'email': emailController.text,
+          'password': passwordController.text,
         }),
       );
 
-      // Proses response dari server
       if (response.statusCode == 200) {
         final responseData = json.decode(response.body);
+
         if (responseData['status'] == 'success') {
-          // Login berhasil
+          // Simpan token login jika ada
+          if (responseData.containsKey('token')) {
+            final prefs = await SharedPreferences.getInstance();
+            await prefs.setString('token', responseData['token']);
+          }
+
+          // Berikan notifikasi login berhasil
           Get.snackbar('Success', responseData['message']);
-          // Navigasi ke halaman utama setelah login berhasil
-          Get.toNamed('/main_navigation');
+
+          // Arahkan ke halaman MainNavigation dan hapus semua stack navigasi sebelumnya
+          Get.offAllNamed(Routes.MAIN_NAVIGATION);
         } else {
           // Tampilkan pesan error jika login gagal
           Get.snackbar('Error', responseData['message']);
@@ -43,14 +60,18 @@ class LoginController extends GetxController {
         Get.snackbar('Error', 'Gagal menghubungi server');
       }
     } catch (e) {
-      // Tangani error lainnya
       Get.snackbar('Error', 'Terjadi kesalahan: $e');
     } finally {
-      // Set status loading menjadi false setelah proses selesai
+      // Set status loading menjadi false
       isLoading(false);
     }
   }
 
-  // Fungsi untuk menambah nilai count (fungsi tidak terkait login)
-  void increment() => count.value++;
+  // Fungsi untuk membersihkan controller
+  @override
+  void onClose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.onClose();
+  }
 }

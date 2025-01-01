@@ -126,7 +126,7 @@ class AccountPage extends StatelessWidget {
           onPressed: () {
             Navigator.pop(context); // Menutup dialog
             // Navigasi menggunakan GetX ke halaman login
-            Get.offAll(() => const LoginView());
+            Get.offAll(() =>  LoginView());
           },
           child: const Text('Ya'),
         ),
@@ -139,6 +139,8 @@ class AccountPage extends StatelessWidget {
 }
 
 class LoginPage extends StatelessWidget {
+  const LoginPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -154,6 +156,8 @@ class LoginPage extends StatelessWidget {
 
 // Halaman untuk metode pembayaran
 class PaymentMethodsPage extends StatelessWidget {
+  const PaymentMethodsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -182,6 +186,8 @@ class PaymentMethodsPage extends StatelessWidget {
 
 // Halaman untuk alamat tersimpan
 class StoredAddressesPage extends StatelessWidget {
+  const StoredAddressesPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -197,6 +203,8 @@ class StoredAddressesPage extends StatelessWidget {
 
 // Halaman untuk kontak darurat
 class EmergencyContactsPage extends StatelessWidget {
+  const EmergencyContactsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -212,6 +220,8 @@ class EmergencyContactsPage extends StatelessWidget {
 
 // Halaman untuk pusat bisnis
 class BusinessCenterPage extends StatelessWidget {
+  const BusinessCenterPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -227,6 +237,8 @@ class BusinessCenterPage extends StatelessWidget {
 
 // Halaman untuk pusat bantuan
 class HelpCenterPage extends StatelessWidget {
+  const HelpCenterPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -242,6 +254,8 @@ class HelpCenterPage extends StatelessWidget {
 
 // Halaman untuk pengaturan bahasa
 class LanguagePage extends StatelessWidget {
+  const LanguagePage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -257,6 +271,8 @@ class LanguagePage extends StatelessWidget {
 
 // Halaman untuk pengaturan
 class SettingsPage extends StatelessWidget {
+  const SettingsPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
